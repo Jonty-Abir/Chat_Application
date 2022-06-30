@@ -23,7 +23,7 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
-
+// re quest parse
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
