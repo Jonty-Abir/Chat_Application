@@ -1,6 +1,6 @@
 // external imports
-
-const { cookie } = require("express-validator");
+  let cookies =
+    Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
 const jwt = require("jsonwebtoken");
 
 // internal imports
@@ -45,7 +45,7 @@ const checkLogin = (req, res, next) => {
 };
 
 const redirectLoggedIn = (req, res, next) => {
-  if (!cookie) {
+  if (!cookies) {
     next();
   } else {
     res.redirect("/inbox");
