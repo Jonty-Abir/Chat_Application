@@ -8,6 +8,7 @@ const Users = require("../models/people");
 
 async function getUserController(req, res, next) {
   const users = await Users.find();
+  //console.log(req.user); // show whitch user is loggedIn
   //console.log(users.forEach((user) => console.log(user.name)));
   try {
     res.render("users", {
@@ -24,7 +25,7 @@ async function addUserController(req, res, next) {
   if (req.files && req.files.length > 0) {
     newUser = new Users({
       ...req.body,
-      avater: req.files[0].filename,
+      avatar: req.files[0].filename,
       password: hashPassword,
     });
   } else {
@@ -58,9 +59,9 @@ async function removeUser(req, res, next) {
     });
 
     // remove error
-    if (user.avater) {
+    if (user.avatar) {
       unlink(
-        join(__dirname, `../public/uploads/avater/${user.avater}`),
+        join(__dirname, `../public/uploads/avatar/${user.avatar}`),
         (err) => {
           if (err) {
             console.log(err, "Known error occure");

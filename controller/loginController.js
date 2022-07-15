@@ -14,7 +14,7 @@ async function login(req, res, next) {
     const user = await Users.findOne({
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
-
+    //console.log(user);
     if (user && user._id) {
       const isValidPassword = await bycript.compare(
         req.body.password,
@@ -22,10 +22,11 @@ async function login(req, res, next) {
       );
       if (isValidPassword) {
         const userObject = {
+          userid: user._id,
           username: user.name,
-          mobile: user.mobile,
           email: user.email,
-          role: "user,",
+          avatar: user.avatar,
+          role: user.role || "user,",
         };
         // generate token
         const token = jwt.sign(userObject, process.env.JWT_SECRET, {
@@ -42,7 +43,7 @@ async function login(req, res, next) {
         // set logged in user local identifire
         res.locals.loggedInUser = userObject;
 
-        res.render("inbox");
+        res.redirect("inbox");
       } else {
         throw createError("Login Falid! Please try again.");
       }

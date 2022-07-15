@@ -3,6 +3,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
+const http = require("http");
+const moment = require("moment");
 const cookieParser = require("cookie-parser");
 // internal imports
 const {
@@ -12,9 +14,20 @@ const {
 const loginRouter = require("./router/loginRouter");
 const inboxRouter = require("./router/inboxRouter");
 const userRouter = require("./router/userRouter");
+const errorRouter = require("./router/errorRouter");
 const app = express();
+
+// for socket
+const server = http.createServer(app);
+
 dotenv.config(); // read .env file
 
+const io = require("socket.io")(server);
+global.io = io;
+
+app.locals.moment = moment;
+
+// Database connection
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING)
   .then(() => {
@@ -37,11 +50,12 @@ app.use(cookieParser(process.env.COOKIC_SECRET));
 app.use("/", loginRouter);
 app.use("/inbox", inboxRouter);
 app.use("/users", userRouter);
+app.use("/error", errorRouter);
 
 // error handler
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Server listening port ${process.env.PORT}`);
 });

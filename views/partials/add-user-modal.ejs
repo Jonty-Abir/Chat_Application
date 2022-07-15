@@ -23,8 +23,8 @@
         <input type="password" placeholder="enter password" name="password" />
         <p class="error password-error"></p>
 
-        <input type="file" name="avater" />
-        <p class="error avater-error"></p>
+        <input type="file" name="avatar" />
+        <p class="error avatar-error"></p>
 
         <p class="error common-error"></p>
 
@@ -83,7 +83,7 @@
     if (result.errors) {
       // errors
       Object.keys(result.errors).forEach((fieldName) => {
-        console.log(fieldName)
+       // console.log(fieldName);
         // add error class to all inputs
         form[fieldName].classList.add("error");
         // set all error placeholders (p tag) textContent

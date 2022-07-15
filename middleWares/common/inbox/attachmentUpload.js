@@ -1,14 +1,18 @@
-// external improts
-const uploader = require("../../../utilities/singleUploder");
+// external imports
 
-function avatarUpload(req, res, next) {
+// internal imports
+const uploader = require("../../../utilities/multipleUploder");
+
+function attachmentUploader(req, res, next) {
   const upload = uploader(
-    "avatar",
+    "attachments",
     ["image/jpeg", "image/jpg", "image/png"],
     10000000,
-    "only jpg jpeg png format suported"
+    2,
+    "Only .jpg .png .jpeg formats are suported!"
   );
-  // err handal without passing our defult handaler
+  // call  the middleware fun
+
   upload.any()(req, res, (err) => {
     if (err) {
       res.status(500).json({
@@ -24,4 +28,4 @@ function avatarUpload(req, res, next) {
   });
 }
 
-module.exports = avatarUpload;
+module.exports = attachmentUploader;

@@ -23,7 +23,7 @@ const addUserValidator = [
       try {
         const user = await Users.findOne({ email: value });
         if (user) {
-          console.log(user);
+          // console.log(user);
           throw createError("Email already use!");
         }
       } catch (err) {
@@ -71,7 +71,7 @@ function addValidatorHandler(req, res, next) {
       // multer put the uploaded file in req.files
       const { filename } = req.files[0];
       unlink(
-        path.join(__dirname, `../../../public/uploads/avater/${filename}`),
+        path.join(__dirname, `../../../public/uploads/avatar/${filename}`),
         (err) => {
           if (err) console.log(err);
         }

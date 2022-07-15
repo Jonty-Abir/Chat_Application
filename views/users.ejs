@@ -22,8 +22,8 @@
             <% users.forEach( (user)=>{  %>
             <tr id="<%= user._id %>">
               <td class="name">
-                <% if (user.avater) { %>
-                  <img src="./uploads/avater/<%= user.avater %>" alt="Dp" />
+                <% if (user.avatar) { %>
+                  <img src="./uploads/avatar/<%= user.avatar %>" alt="Dp" />
                 <% } else { %>
                   <img src="./images/nophoto.png" alt="NotFoundDp" />
                   <% } %>
@@ -42,6 +42,7 @@
 
     <%- include('./partials/add-user-modal.ejs'); %>
     <script>
+      
       // toasts
       const deleteToast = Toastify({
             text: "User was deleted successfully!",

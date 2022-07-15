@@ -3,7 +3,7 @@ const express = require("express");
 
 // inetrnal imports
 // uopload multiple form data
-const avaterUpload = require("../middleWares/common/user/avatarUpload");
+const avatarUpload = require("../middleWares/common/user/avatarUpload");
 const {
   getUserController,
   addUserController,
@@ -15,18 +15,25 @@ const {
   addUserValidator,
   addValidatorHandler,
 } = require("../middleWares/common/user/userValidator");
-const { checkLogin } = require("../middleWares/common/checkLogin");
+const { checkLogin, requireRole } = require("../middleWares/common/checkLogin");
 
 const router = express.Router();
 
 // get route
-router.get("/", decodedhtmlResponse(`Users`), checkLogin, getUserController);
+router.get(
+  "/",
+  decodedhtmlResponse(`Users`),
+  checkLogin,
+  requireRole(["admin"]),
+  getUserController
+);
 
 // create route
 router.post(
   "/",
   checkLogin,
-  avaterUpload,
+  requireRole(["admin"]),
+  avatarUpload,
   addUserValidator,
   addValidatorHandler,
   addUserController

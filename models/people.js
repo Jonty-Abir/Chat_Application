@@ -23,7 +23,7 @@ const peopleSchema = mongoose.Schema(
       require: true,
       trim: true,
     },
-    avater: {
+    avatar: {
       type: String,
       trim: true,
     },
